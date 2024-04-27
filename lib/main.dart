@@ -63,17 +63,16 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppState(),
-      child: const StatelessGenderSentimentApp(),
+      child: const GenderSentimentApp(),
     ),
   );
 }
 
-class StatelessGenderSentimentApp extends StatelessWidget {
-  const StatelessGenderSentimentApp({super.key}); // Made it a StatelessWidget
+class GenderSentimentApp extends StatelessWidget {
+  const GenderSentimentApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Access your KioskState using Consumer
     final kioskState = Provider.of<AppState>(context);
 
     const Color activeGenderColor = Colors.yellow;
@@ -100,7 +99,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedGender == Gender.female
                               ? activeGenderColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
@@ -122,7 +121,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kioskState.selectedGender == Gender.male
                           ? activeGenderColor
-                          : inactiveButtonColor, // Highlight if selected
+                          : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                     ),
@@ -143,7 +142,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedGender == Gender.nonBinary
                               ? activeGenderColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
@@ -175,7 +174,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedSentiment == Sentiment.awful
                               ? activeAwfulColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
@@ -202,7 +201,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedSentiment == Sentiment.bad
                               ? activeBadColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(
@@ -226,7 +225,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedSentiment == Sentiment.good
                               ? activeGoodColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(fontSize: 20),
@@ -249,7 +248,7 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                       backgroundColor:
                           kioskState.selectedSentiment == Sentiment.great
                               ? activeGreatColor
-                              : inactiveButtonColor, // Highlight if selected
+                              : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(fontSize: 20),
