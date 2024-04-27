@@ -31,7 +31,7 @@ final sentimentDisplayValues = {
 class AppState with ChangeNotifier {
   Gender? selectedGender;
   Sentiment? selectedSentiment;
-  bool isTimerActive = false;
+  Timer? _resetTimer;
 
   void selectGender(Gender gender) {
     selectedGender = gender;
@@ -46,17 +46,15 @@ class AppState with ChangeNotifier {
   }
 
   void startTimer() {
-    isTimerActive = true;
+    _resetTimer?.cancel(); // Cancel any previous timer
+    _resetTimer = Timer(const Duration(seconds: 10), resetSelections);
     notifyListeners();
-    Future.delayed(const Duration(seconds: 10), () {
-      resetSelections();
-    });
   }
 
   void resetSelections() {
     selectedGender = null;
     selectedSentiment = null;
-    isTimerActive = false;
+    _resetTimer = null;
     notifyListeners();
   }
 }
