@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  runApp(MyApp());
+  await Hive.initFlutter();
+  runApp(const GenderSentimentApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class GenderSentimentApp extends StatefulWidget {
+  const GenderSentimentApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _GenderSentimentAppState createState() => _GenderSentimentAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _GenderSentimentAppState extends State<GenderSentimentApp> {
   String? selectedGender;
   String? selectedSentiment;
   Timer? timer;
