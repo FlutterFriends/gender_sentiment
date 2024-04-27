@@ -3,6 +3,9 @@ import 'package:gender_sentiment/database.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
+const double labelFontSize = 25;
+const double iconFontSize = 30;
+
 final genderDisplayValues = {
   Gender.male: 'Male',
   Gender.female: 'Female',
@@ -120,11 +123,11 @@ class GenderSentimentApp extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Icon(Icons.female, size: iconFontSize),
                         Text(
                           genderDisplayValues[Gender.female]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Icon(Icons.female, size: 40),
                       ],
                     ),
                   ),
@@ -135,16 +138,18 @@ class GenderSentimentApp extends StatelessWidget {
                           ? activeGenderColor
                           : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Icon(Icons.male, size: iconFontSize),
                         Text(
                           genderDisplayValues[Gender.male]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Icon(Icons.male, size: 40),
                       ],
                     ),
                   ),
@@ -163,11 +168,11 @@ class GenderSentimentApp extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Icon(Icons.transgender, size: iconFontSize),
                         Text(
                           genderDisplayValues[Gender.nonBinary]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Icon(Icons.transgender, size: 40),
                       ],
                     ),
                   ),
@@ -191,18 +196,16 @@ class GenderSentimentApp extends StatelessWidget {
                         horizontal: 20,
                         vertical: 15,
                       ),
-                      textStyle: const TextStyle(fontSize: 20),
+                      textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Text('😞',
+                            style: TextStyle(fontSize: iconFontSize)),
                         Text(
                           sentimentDisplayValues[Sentiment.awful]!,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const Text(
-                          '😞',
-                          style: TextStyle(fontSize: 40),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
                       ],
                     ),
@@ -215,19 +218,22 @@ class GenderSentimentApp extends StatelessWidget {
                               ? activeBadColor
                               : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
                       textStyle: const TextStyle(
-                        fontSize: 20,
+                        fontSize: labelFontSize,
                       ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Text('😐',
+                            style: TextStyle(fontSize: iconFontSize)),
                         Text(
                           sentimentDisplayValues[Sentiment.bad]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Text('😐', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
@@ -239,17 +245,20 @@ class GenderSentimentApp extends StatelessWidget {
                               ? activeGoodColor
                               : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      textStyle: const TextStyle(fontSize: 20),
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                      textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Text('🙂',
+                            style: TextStyle(fontSize: iconFontSize)),
                         Text(
                           sentimentDisplayValues[Sentiment.good]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Text('🙂', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
@@ -262,17 +271,20 @@ class GenderSentimentApp extends StatelessWidget {
                               ? activeGreatColor
                               : inactiveButtonColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      textStyle: const TextStyle(fontSize: 20),
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                      textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        const Text('😄',
+                            style: TextStyle(fontSize: iconFontSize)),
                         Text(
                           sentimentDisplayValues[Sentiment.great]!,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: labelFontSize),
                         ),
-                        const Text('😄', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
