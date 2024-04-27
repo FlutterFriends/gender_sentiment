@@ -2,35 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
-class AppState with ChangeNotifier {
-  String? selectedGender;
-  String? selectedSentiment;
-  bool isTimerActive = false;
+enum Gender {
+  female,
+  male,
+  nonBinary,
+}
 
-  void selectGender(String gender) {
+enum Sentiment {
+  awful,
+  bad,
+  good,
+  great,
+}
+
+final genderDisplayValues = {
+  Gender.male: 'Male',
+  Gender.female: 'Female',
+  Gender.nonBinary: 'Non-binary'
+};
+
+final sentimentDisplayValues = {
+  Sentiment.awful: 'Awful',
+  Sentiment.bad: 'Bad',
+  Sentiment.good: 'Good',
+  Sentiment.great: 'Great'
+};
+
+class AppState with ChangeNotifier {
+  Gender? selectedGender;
+  Sentiment? selectedSentiment;
+  Timer? _resetTimer;
+
+  void selectGender(Gender gender) {
     selectedGender = gender;
     startTimer();
     notifyListeners();
   }
 
-  void selectSentiment(String sentiment) {
+  void selectSentiment(Sentiment sentiment) {
     selectedSentiment = sentiment;
     startTimer();
     notifyListeners();
   }
 
   void startTimer() {
-    isTimerActive = true;
+    _resetTimer?.cancel(); // Cancel any previous timer
+    _resetTimer = Timer(const Duration(seconds: 10), resetSelections);
     notifyListeners();
-    Future.delayed(const Duration(seconds: 10), () {
-      resetSelections();
-    });
   }
 
   void resetSelections() {
     selectedGender = null;
     selectedSentiment = null;
-    isTimerActive = false;
+    _resetTimer = null;
     notifyListeners();
   }
 }
@@ -71,57 +95,68 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => kioskState.selectGender('Female'),
+                    onPressed: () => kioskState.selectGender(Gender.female),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedGender == 'Female'
-                          ? activeGenderColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedGender == Gender.female
+                              ? activeGenderColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Female ', style: TextStyle(fontSize: 20)),
-                        Icon(Icons.female, size: 40),
+                        Text(
+                          genderDisplayValues[Gender.female]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Icon(Icons.female, size: 40),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => kioskState.selectGender('Male'),
+                    onPressed: () => kioskState.selectGender(Gender.male),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedGender == 'Male'
+                      backgroundColor: kioskState.selectedGender == Gender.male
                           ? activeGenderColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Male ', style: TextStyle(fontSize: 20)),
-                        Icon(Icons.male, size: 40),
+                        Text(
+                          genderDisplayValues[Gender.male]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Icon(Icons.male, size: 40),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => kioskState.selectGender('Non-binary'),
+                    onPressed: () => kioskState.selectGender(Gender.nonBinary),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedGender == 'Non-binary'
-                          ? activeGenderColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedGender == Gender.nonBinary
+                              ? activeGenderColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Non-binary ', style: TextStyle(fontSize: 20)),
-                        Icon(Icons.transgender, size: 40),
+                        Text(
+                          genderDisplayValues[Gender.nonBinary]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Icon(Icons.transgender, size: 40),
                       ],
                     ),
                   ),
@@ -134,78 +169,99 @@ class StatelessGenderSentimentApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => kioskState.selectSentiment('Awful'),
+                    onPressed: () =>
+                        kioskState.selectSentiment(Sentiment.awful),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedSentiment == 'Awful'
-                          ? activeAwfulColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedSentiment == Sentiment.awful
+                              ? activeAwfulColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
                       ),
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Awful ', style: TextStyle(fontSize: 20)),
-                        Text('😞', style: TextStyle(fontSize: 40)),
+                        Text(
+                          sentimentDisplayValues[Sentiment.awful]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Text(
+                          '😞',
+                          style: TextStyle(fontSize: 40),
+                        ),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => kioskState.selectSentiment('Bad'),
+                    onPressed: () => kioskState.selectSentiment(Sentiment.bad),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedSentiment == 'Bad'
-                          ? activeBadColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedSentiment == Sentiment.bad
+                              ? activeBadColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Bad ', style: TextStyle(fontSize: 20)),
-                        Text('😐', style: TextStyle(fontSize: 40)),
+                        Text(
+                          sentimentDisplayValues[Sentiment.bad]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Text('😐', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => kioskState.selectSentiment('Good'),
+                    onPressed: () => kioskState.selectSentiment(Sentiment.good),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedSentiment == 'Good'
-                          ? activeGoodColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedSentiment == Sentiment.good
+                              ? activeGoodColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Good ', style: TextStyle(fontSize: 20)),
-                        Text('🙂', style: TextStyle(fontSize: 40)),
+                        Text(
+                          sentimentDisplayValues[Sentiment.good]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Text('🙂', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => kioskState.selectSentiment('Great'),
+                    onPressed: () =>
+                        kioskState.selectSentiment(Sentiment.great),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kioskState.selectedSentiment == 'Great'
-                          ? activeGreatColor
-                          : inactiveButtonColor, // Highlight if selected
+                      backgroundColor:
+                          kioskState.selectedSentiment == Sentiment.great
+                              ? activeGreatColor
+                              : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text('Great ', style: TextStyle(fontSize: 20)),
-                        Text('😄', style: TextStyle(fontSize: 40)),
+                        Text(
+                          sentimentDisplayValues[Sentiment.great]!,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Text('😄', style: TextStyle(fontSize: 40)),
                       ],
                     ),
                   ),
