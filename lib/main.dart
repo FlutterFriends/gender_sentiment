@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 void main() async {
-  runApp(MyApp());
+  runApp(const GenderSentimentApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class GenderSentimentApp extends StatefulWidget {
+  const GenderSentimentApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _GenderSentimentAppState createState() => _GenderSentimentAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _GenderSentimentAppState extends State<GenderSentimentApp> {
   String? selectedGender;
   String? selectedSentiment;
   Timer? timer;
@@ -63,23 +63,6 @@ class _MyAppState extends State<MyApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => selectGender('Male'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedGender == 'Male'
-                          ? activeGenderColor
-                          : inactiveButtonColor, // Highlight if selected
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text('Male ', style: TextStyle(fontSize: 20)),
-                        Icon(Icons.male, size: 40),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
                     onPressed: () => selectGender('Female'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: selectedGender == 'Female'
@@ -95,6 +78,23 @@ class _MyAppState extends State<MyApp> {
                       children: <Widget>[
                         Text('Female ', style: TextStyle(fontSize: 20)),
                         Icon(Icons.female, size: 40),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => selectGender('Male'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: selectedGender == 'Male'
+                          ? activeGenderColor
+                          : inactiveButtonColor, // Highlight if selected
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text('Male ', style: TextStyle(fontSize: 20)),
+                        Icon(Icons.male, size: 40),
                       ],
                     ),
                   ),
