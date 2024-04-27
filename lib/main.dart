@@ -1,56 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 
-void main() async {
-  runApp(const GenderSentimentApp());
-}
-
-class GenderSentimentApp extends StatefulWidget {
-  const GenderSentimentApp({super.key});
-
-  @override
-  _GenderSentimentAppState createState() => _GenderSentimentAppState();
-}
-
-class _GenderSentimentAppState extends State<GenderSentimentApp> {
+class AppState with ChangeNotifier {
   String? selectedGender;
   String? selectedSentiment;
-  Timer? timer;
-
-  static const Color activeGenderColor = Colors.yellow;
-  static const Color inactiveButtonColor = Colors.white;
-  static const Color activeAwfulColor = Colors.redAccent;
-  static const Color activeBadColor = Colors.orangeAccent;
-  static const Color activeGoodColor = Colors.lightBlue;
-  static const Color activeGreatColor = Colors.greenAccent;
-
-  void startTimer() {
-    timer = Timer(const Duration(seconds: 10), () {
-      setState(() {
-        selectedGender = null;
-        selectedSentiment = null;
-      });
-    });
-  }
+  bool isTimerActive = false;
 
   void selectGender(String gender) {
-    if (timer?.isActive ?? false) timer!.cancel();
-    setState(() {
-      selectedGender = gender;
-    });
+    selectedGender = gender;
     startTimer();
+    notifyListeners();
   }
 
   void selectSentiment(String sentiment) {
-    if (timer?.isActive ?? false) timer!.cancel();
-    setState(() {
-      selectedSentiment = sentiment;
-    });
+    selectedSentiment = sentiment;
     startTimer();
+    notifyListeners();
   }
+
+  void startTimer() {
+    isTimerActive = true;
+    notifyListeners();
+    Future.delayed(const Duration(seconds: 10), () {
+      resetSelections();
+    });
+  }
+
+  void resetSelections() {
+    selectedGender = null;
+    selectedSentiment = null;
+    isTimerActive = false;
+    notifyListeners();
+  }
+}
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppState(),
+      child: const StatelessGenderSentimentApp(),
+    ),
+  );
+}
+
+class StatelessGenderSentimentApp extends StatelessWidget {
+  const StatelessGenderSentimentApp({super.key}); // Made it a StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    // Access your KioskState using Consumer
+    final kioskState = Provider.of<AppState>(context);
+
+    const Color activeGenderColor = Colors.yellow;
+    const Color inactiveButtonColor = Colors.white;
+    const Color activeAwfulColor = Colors.redAccent;
+    const Color activeBadColor = Colors.orangeAccent;
+    const Color activeGoodColor = Colors.lightBlue;
+    const Color activeGreatColor = Colors.greenAccent;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Gender Sentiment Kiosk')),
@@ -63,9 +71,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => selectGender('Female'),
+                    onPressed: () => kioskState.selectGender('Female'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedGender == 'Female'
+                      backgroundColor: kioskState.selectedGender == 'Female'
                           ? activeGenderColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -82,9 +90,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => selectGender('Male'),
+                    onPressed: () => kioskState.selectGender('Male'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedGender == 'Male'
+                      backgroundColor: kioskState.selectedGender == 'Male'
                           ? activeGenderColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -99,9 +107,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => selectGender('Non-binary'),
+                    onPressed: () => kioskState.selectGender('Non-binary'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedGender == 'Non-binary'
+                      backgroundColor: kioskState.selectedGender == 'Non-binary'
                           ? activeGenderColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -126,9 +134,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => selectSentiment('Awful'),
+                    onPressed: () => kioskState.selectSentiment('Awful'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedSentiment == 'Awful'
+                      backgroundColor: kioskState.selectedSentiment == 'Awful'
                           ? activeAwfulColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -146,9 +154,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => selectSentiment('Bad'),
+                    onPressed: () => kioskState.selectSentiment('Bad'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedSentiment == 'Bad'
+                      backgroundColor: kioskState.selectedSentiment == 'Bad'
                           ? activeBadColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -166,9 +174,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => selectSentiment('Good'),
+                    onPressed: () => kioskState.selectSentiment('Good'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedSentiment == 'Good'
+                      backgroundColor: kioskState.selectedSentiment == 'Good'
                           ? activeGoodColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
@@ -184,9 +192,9 @@ class _GenderSentimentAppState extends State<GenderSentimentApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => selectSentiment('Great'),
+                    onPressed: () => kioskState.selectSentiment('Great'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedSentiment == 'Great'
+                      backgroundColor: kioskState.selectedSentiment == 'Great'
                           ? activeGreatColor
                           : inactiveButtonColor, // Highlight if selected
                       padding: const EdgeInsets.symmetric(
