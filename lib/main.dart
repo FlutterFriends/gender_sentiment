@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gender_sentiment/database.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-
-enum Gender {
-  female,
-  male,
-  nonBinary,
-}
-
-enum Sentiment {
-  awful,
-  bad,
-  good,
-  great,
-}
 
 final genderDisplayValues = {
   Gender.male: 'Male',
@@ -33,16 +21,20 @@ class AppState with ChangeNotifier {
   Sentiment? selectedSentiment;
   Timer? _resetTimer;
 
+  final database = AppDatabase();
+
   void selectGender(Gender gender) {
     selectedGender = gender;
     startTimer();
     notifyListeners();
+    saveObservation();
   }
 
   void selectSentiment(Sentiment sentiment) {
     selectedSentiment = sentiment;
     startTimer();
     notifyListeners();
+    saveObservation();
   }
 
   void startTimer() {
@@ -56,6 +48,26 @@ class AppState with ChangeNotifier {
     selectedSentiment = null;
     _resetTimer = null;
     notifyListeners();
+  }
+
+  Future<void> saveObservation() async {
+    if (selectedGender == null || selectedSentiment == null) {
+      return;
+    }
+
+    final observation = ObservationsCompanion.insert(
+      gender: selectedGender!,
+      sentiment: selectedSentiment!,
+      timestamp: DateTime.now(),
+    );
+
+    await database.into(database.observations).insert(observation);
+
+    // Pause for one second for the user to see their selection
+    // before resetting the selections.
+    await Future.delayed(const Duration(seconds: 1));
+
+    resetSelections();
   }
 }
 
