@@ -99,7 +99,7 @@ class GenderSentimentApp extends StatelessWidget {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Gender Sentiment Kiosk')),
+        appBar: AppBar(title: const Text('Gender Sentiment Survey')),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
