@@ -20,10 +20,10 @@ final genderDisplayValues = {
 };
 
 final sentimentDisplayValues = {
-  Sentiment.awful: 'Awful',
+  Sentiment.veryBad: 'Very Bad',
   Sentiment.bad: 'Bad',
   Sentiment.good: 'Good',
-  Sentiment.great: 'Great'
+  Sentiment.veryGood: 'Very Good'
 };
 
 class AppState with ChangeNotifier {
@@ -184,10 +184,10 @@ class GenderSentimentApp extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () =>
-                        kioskState.selectSentiment(Sentiment.awful),
+                        kioskState.selectSentiment(Sentiment.veryBad),
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          kioskState.selectedSentiment == Sentiment.awful
+                          kioskState.selectedSentiment == Sentiment.veryBad
                               ? activeAwfulColor
                               : inactiveButtonColor,
                       padding: buttonPadding,
@@ -199,7 +199,7 @@ class GenderSentimentApp extends StatelessWidget {
                         const Text('😞',
                             style: TextStyle(fontSize: iconFontSize)),
                         Text(
-                          sentimentDisplayValues[Sentiment.awful]!,
+                          sentimentDisplayValues[Sentiment.veryBad]!,
                           style: const TextStyle(fontSize: labelFontSize),
                         ),
                       ],
@@ -253,10 +253,10 @@ class GenderSentimentApp extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () =>
-                        kioskState.selectSentiment(Sentiment.great),
+                        kioskState.selectSentiment(Sentiment.veryGood),
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          kioskState.selectedSentiment == Sentiment.great
+                          kioskState.selectedSentiment == Sentiment.veryGood
                               ? activeGreatColor
                               : inactiveButtonColor,
                       padding: buttonPadding,
@@ -268,7 +268,7 @@ class GenderSentimentApp extends StatelessWidget {
                         const Text('😄',
                             style: TextStyle(fontSize: iconFontSize)),
                         Text(
-                          sentimentDisplayValues[Sentiment.great]!,
+                          sentimentDisplayValues[Sentiment.veryGood]!,
                           style: const TextStyle(fontSize: labelFontSize),
                         ),
                       ],

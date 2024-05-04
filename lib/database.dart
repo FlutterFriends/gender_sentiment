@@ -17,10 +17,10 @@ enum Gender {
 }
 
 enum Sentiment {
-  awful,
+  veryBad,
   bad,
   good,
-  great,
+  veryGood,
 }
 
 class Observations extends Table {
