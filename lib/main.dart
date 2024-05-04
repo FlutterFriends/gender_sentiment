@@ -3,8 +3,15 @@ import 'package:gender_sentiment/database.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
-const double labelFontSize = 25;
-const double iconFontSize = 30;
+const double labelFontSize = 15;
+const double iconFontSize = 15;
+const double buttonHPadding = 10;
+const double buttonVPadding = 5;
+
+const EdgeInsets buttonPadding = EdgeInsets.symmetric(
+  horizontal: buttonHPadding,
+  vertical: buttonVPadding,
+);
 
 final genderDisplayValues = {
   Gender.male: 'Male',
@@ -115,10 +122,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedGender == Gender.female
                               ? activeGenderColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -137,10 +141,7 @@ class GenderSentimentApp extends StatelessWidget {
                       backgroundColor: kioskState.selectedGender == Gender.male
                           ? activeGenderColor
                           : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -160,10 +161,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedGender == Gender.nonBinary
                               ? activeGenderColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -192,10 +190,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedSentiment == Sentiment.awful
                               ? activeAwfulColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                       textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
@@ -217,10 +212,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedSentiment == Sentiment.bad
                               ? activeBadColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                       textStyle: const TextStyle(
                         fontSize: labelFontSize,
                       ),
@@ -244,10 +236,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedSentiment == Sentiment.good
                               ? activeGoodColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                       textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
@@ -270,10 +259,7 @@ class GenderSentimentApp extends StatelessWidget {
                           kioskState.selectedSentiment == Sentiment.great
                               ? activeGreatColor
                               : inactiveButtonColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
+                      padding: buttonPadding,
                       textStyle: const TextStyle(fontSize: labelFontSize),
                     ),
                     child: Row(
