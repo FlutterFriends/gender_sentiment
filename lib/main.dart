@@ -99,8 +99,6 @@ class GenderSentimentApp extends StatelessWidget {
 
     final mediaQueryData = MediaQuery.of(context);
     final isPortrait = mediaQueryData.orientation == Orientation.portrait;
-    // final screenWidth = mediaQueryData.size.width;
-    // final screenHeight = mediaQueryData.size.height;
 
     double labelFontSize =
         isPortrait ? portraitLabelFontSize : landscapeLabelFontSize;
