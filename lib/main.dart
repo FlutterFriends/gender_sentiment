@@ -122,6 +122,7 @@ class GenderSentimentApp extends StatelessWidget {
     const Color activeGreatColor = Colors.greenAccent;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(title: const Text('Gender Sentiment Survey')),
         body: Column(
